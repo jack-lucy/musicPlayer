@@ -1,0 +1,306 @@
+/*使用字体图标icomoon*/
+@font-face {
+    font-family: 'icomoon';
+    src:  url('../fonts/icomoon.eot?2qnqw4');
+    src:  url('../fonts/icomoon.eot?2qnqw4#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?2qnqw4') format('truetype'),
+    url('../fonts/icomoon.woff?2qnqw4') format('woff'),
+    url('../fonts/icomoon.svg?2qnqw4#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+/*背景  最大的盒子*/
+.playerPage{
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    /*我这里引用的是本地照片，大家可以到网上查找适合自己的照片和图标*/
+    /*https://i.loli.net/2020/03/23/gz9abCBAcphv6jF.jpg*/
+    background: url("../images/musicBg.jpg") no-repeat;
+    background-size: 100% 100%;
+    align-items: center;
+    justify-content: center;
+}
+.player{
+    position: relative;
+    width: 1000px;
+    height: 500px;
+    background: wheat;
+}
+/*---------------搜索模块---------*/
+.searchBox{
+    display: flex;
+    position: relative;
+    height: 16%;
+    background: deepskyblue;
+    align-items: center;
+    justify-content:flex-end;
+}
+.searchArea{
+    position: relative;
+    width: 280px;
+    height: 50px;
+}
+.searchBox input {
+    position: absolute;
+    margin-top: -20px;
+    right: 50px;
+    top: 50%;
+    padding: 20px;
+    width: 250px;
+    height: 40px;
+    border-radius: 20px;
+    cursor: text;
+}
+.searchArea::after{
+    content: "\e9d5";
+    font-family: "icomoon";
+    position: absolute;
+    right: 10px;
+    font-size: 30px;
+    cursor: pointer;
+}
+/*---------------中心模块------------------*/
+.centreBox{
+    position: relative;
+    height: 74%;
+}
+/*中间的三个盒子*/
+.centreBox div{
+    position: absolute;
+    height: 370px;
+}
+.line{
+    position: absolute;
+    right: 0;
+}
+/*第一个盒子  歌曲列表*/
+.songsBox{
+    width: 25%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+/*我们把滚动条隐藏起来，css没有统一的的方法，不同浏览器使用的方法，这里我使用的是谷歌浏览器*/
+.songsBox::-webkit-scrollbar {
+    display: none;
+}
+.songsBox ul{
+    width: 100%;
+}
+.songsBox ul li{
+    position: relative;
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid red;
+}
+.songsBox ul li:nth-child(odd){
+    background: rgba(0,0,0,.5);
+}
+.songsBox ul li a,
+.songsBox ul li b{
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    margin-top: -12.5px;
+    height: 25px;
+    font-size: 15px;
+}
+.songsBox ul li a {
+    width: 25px;
+    /*https://i.loli.net/2020/03/23/chJ89uNpofneFrS.png*/
+    background: url("../images/play.png") no-repeat;
+    background-size: cover;
+}
+.songsBox ul li b{
+    left: 30px;
+    width: 100%;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    color: black;
+}
+.songsBox ul li b:hover{
+    color: orange;
+}
+.songsBox li span {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    right: 30px;
+    width: 20px;
+    height: 20px;
+}
+.songsBox li span i{
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    /*https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1031868157,611823724&fm=26&gp=0.jpg*/
+    background: url("../images/videoPlayer.png") no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+}
+
+/*第二个盒子 歌曲信息*/
+.centreBar{
+    margin-left: 25%;
+    width: 50%;
+}
+.player1Img{
+    position: absolute;
+    left: 50%;
+    height: 180px;
+}
+.player2Img{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -74px;
+    margin-left: -74px;
+    width: 148px;
+    height: 148px;
+}
+.player3Img{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -46px;
+    margin-left: -46px;
+    width: 92px;
+    height: 92px;
+    border-radius: 46px;
+}
+/*定义动画*/
+@keyframes Rotate {
+    0% {
+        transform: rotateZ(0);
+    }
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+/* 调用动画:无限循环、暂停状态、匀速、周期*/
+.autoRotate {
+    animation-name: Rotate;
+    animation-iteration-count: infinite;
+    animation-play-state: paused;
+    animation-timing-function: linear;
+    animation-duration: 5s;
+}
+ /*是否正在播放 如果在播放我们添加类属性，类属性(playing)设置动画，如果停止，那么撤销类属性*/
+.playing .autoRotate{
+    animation-play-state: running;
+}
+/*图片旋转角度、图片位置改动、添加过渡*/
+.autoRotate_gan {
+    transform: rotate(-25deg);
+    transform-origin: 20px 20px;
+    transition: 1s;
+}
+ /*播放杆 转回去 */
+.playing .autoRotate_gan{
+    transform: rotate(0);
+}
+
+/*第三个盒子  评论区*/
+.commentsBox{
+    margin-left: 75%;
+    width: 25%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.commentsBox::-webkit-scrollbar {
+    display: none;
+}
+.commentsBox h5{
+    position: fixed;
+    font-size: 20px;
+    color: black;
+    font-style: italic;
+    text-shadow:2px 2px 2px purple;
+    z-index: 2;
+}
+.commentsBox h5:hover{
+    display: none;
+}
+.commentsBox dl {
+    position: relative;
+    padding-top: 10px;
+    padding-left: 55px;
+    border-bottom: 1px solid green;
+}
+.commentsBox dl:nth-child(odd){
+    background: hotpink;
+}
+.commentsBox dt {
+    position: absolute;
+    left: 4px;
+    top: 10px;
+}
+.commentsBox img{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}
+.commentsBox .name {
+    top: 5px;
+    position: absolute;
+    font-weight: bold;
+    color: #333;
+    padding-top: 5px;
+}
+.commentsBox .detail {
+    color: #666;
+    margin: 15px 0;
+    line-height: 18px;
+}
+
+/*----------播放模块---------*/
+.audioBox{
+    position: relative;
+    width: 100%;
+    height: 10%;
+    background-color: #f1f3f4;
+ }
+.audioBox audio{
+    width: 100%;
+    height: 100%;
+}
+
+/*MV模块*/
+.video_con{
+    position: fixed;
+    left: 50%;
+    margin-left: 400px;
+    margin-top: -273px;
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    background: url("https://i.loli.net/2020/03/23/ZWSChyBwjA5uRfL.png") no-repeat;
+    z-index: 995;
+}
+.video_con video {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-top: -273px;
+    width: 800px;
+    height: 546px;
+    transform: translateX(-50%);
+    z-index: 990;
+}
+.video_con .mask {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 980;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+

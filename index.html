@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jack的播放器</title>
+    <link rel="stylesheet" href="./css/music.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <!--    注意这里要将vue的引入放到前面，并且将script执行放到dom加载之后-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/music.js"></script>
+</head>
+<body>
+<div class="playerPage">
+    <div class="player">
+        <!--搜索区域-->
+        <div class="searchBox">
+<!--            <img src="" alt="">-->
+            <div class="searchArea">
+                <input type="text" placeholder="请输入搜索内容" autocomplete="off"
+               v-model="query"  @keyup.enter="searchMusic" />
+            </div>
+        </div>
+        <!--中心区域-->
+        <div class="centreBox">
+            <!--歌曲部分-->
+            <div class="songsBox">
+                <ul>
+                    <li v-for="item in musicList">
+                        <a href="javascript:;" @click="playMusic(item.id)"></a>
+                        <b>{{item.name}}</b>
+                        <span>
+                            <i @click="playMv(item.mvid)" v-if="item.mvid!=0"></i>
+                        </span>
+                    </li>
+                </ul>
+                <img src="./images/line.png" alt="" class="line">
+            </div>
+            <!--歌曲信息部分-->
+            <div class="centreBar" :class="{playing:isPlaying}">
+                <img src="./images/player1.png" alt="" class="player1Img autoRotate_gan">
+                <img src="./images/player2.png" alt="" class="player2Img autoRotate">
+                <img :src="musicCover" v-if="photoShow" alt="" class="player3Img autoRotate">
+<!--                https://i.loli.net/2020/03/23/dor23bhZtIvK17X.png-->
+                <img src="./images/line.png" alt="" class="line">
+            </div>
+            <!--评论部分-->
+            <div class="commentsBox">
+                <h5>热门留言</h5>
+                <dl v-for="item in hotComments">
+                    <dt>
+                        <img :src="item.user.avatarUrl" alt=""/>
+                    </dt>
+                    <dd class="name">{{item.user.nickname}}</dd>
+                    <dd class="detail">
+                        {{item.content}}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <!--播放区域-->
+        <div class="audioBox">
+            <audio ref='audio' :src="musicUrl" @play="play" @pause="pause" controls autoplay loop class="myaudio"></audio>
+        </div>
+        <!--MV区域-->
+        <div class="video_con" v-show="isShow" style="display: none;">
+            <video ref='video' :src="mvUrl" controls="controls"></video>
+            <!--关闭MV标签  只要是在视频区域外都可以关闭-->
+            <div class="mask" @click="hide"></div>
+        </div>
+    </div>
+    </div>
+</div>
+</body>
+</html>
